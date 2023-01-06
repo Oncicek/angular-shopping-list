@@ -7,10 +7,8 @@
 <div class="row">
   <div class="col-xs-12">
     <app-recipe-item
-      (click)="onRecipeClick(recipe)"
       *ngFor="let recipe of recipes"
       [recipe]="recipe"
-      (recipeDetailEmitter)="onRecipeClick(recipe)"
     ></app-recipe-item>
   </div>
 </div>

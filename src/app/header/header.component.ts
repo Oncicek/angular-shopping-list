@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Features } from '../shared/enums';
+import { LoggingService } from '../shared/services/logging.service';
 
 @Component({
   selector: 'app-header',
@@ -12,5 +13,11 @@ export class HeaderComponent {
 
   onSelect(feature: Features) {
     this.featureSelected.emit(feature);
+  }
+
+  constructor(private loggingService: LoggingService) {}
+
+  toggleModal() {
+    this.loggingService.toggleModal();
   }
 }

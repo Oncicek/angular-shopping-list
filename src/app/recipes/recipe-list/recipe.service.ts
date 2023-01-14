@@ -1,4 +1,5 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { Ingredient } from 'src/app/shared/ingredient.model';
 import { ShoppingListService } from 'src/app/shopping-list/shopping-list.service';
 import { Recipe } from '../recipe.model';
@@ -7,6 +8,7 @@ import { Recipe } from '../recipe.model';
   providedIn: 'root',
 })
 export class RecipeService {
+  recipesChanged = new Subject<Recipe[]>();
   private recipes: Recipe[] = [
     new Recipe(
       'A tasty schnitzel',
@@ -15,14 +17,12 @@ export class RecipeService {
       [new Ingredient('Meat', 1), new Ingredient('French Fries', 21)]
     ),
     new Recipe(
-      'Big fat tits',
-      'Tits are good, mkay...',
+      'Schnitzel',
+      'Schnitzel iz good, mkay...',
       'https://upload.wikimedia.org/wikipedia/commons/7/72/Schnitzel.JPG',
       [new Ingredient('Melons', 2), new Ingredient('Buns', 2)]
     ),
   ];
-
-  recipeSelected = new EventEmitter<Recipe>();
 
   constructor(private slService: ShoppingListService) {}
 
@@ -36,5 +36,15 @@ export class RecipeService {
 
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
     this.slService.addIngredients(ingredients);
+  }
+
+  addRecipe(recipe: Recipe) {
+    this.recipes.push(recipe);
+    this.recipesChanged.next([...this.recipes]);
+  }
+
+  updateRecipe(id: number, newRecipe: Recipe) {
+    this.recipes[id] = newRecipe;
+    this.recipesChanged.next([...this.recipes]);
   }
 }

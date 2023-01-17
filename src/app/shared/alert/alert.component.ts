@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { KockaDirective } from '../directives/kocka.directive';
 import { LoggingService } from '../services/logging.service';
 
 @Component({

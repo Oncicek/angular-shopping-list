@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Observable, pipe, Subscription } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-form',
@@ -31,7 +30,7 @@ export class FormComponent implements OnInit, OnDestroy {
           'Access-Control-Allow-Origin': '*',
         },
       })
-      .subscribe();
+      .subscribe((data) => console.log(data.body));
   }
 
   ngOnDestroy(): void {}

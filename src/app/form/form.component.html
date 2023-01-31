@@ -1,41 +1,63 @@
-<div class="col-xs-6">
+<div class="col-xs-12">
   <form class="form" [formGroup]="formGroup!" (ngSubmit)="onSubmit()">
     <div class="row">
       <div class="form-group">
         <label for="nameInput">Name</label>
         <input
-          formControlName="nameInput"
+          formControlName="name"
           type="text"
-          id="nameInput"
+          id="name"
           class="form-control"
-          name="nameInput"
+          name="name"
         />
       </div>
       <div class="form-group">
-        <label for="kockaInput">Kocka</label>
+        <label for="kocka">Kocka</label>
         <input
-          formControlName="kockaInput"
+          formControlName="kocka"
           type="text"
-          id="kockaInput"
+          id="kocka"
           class="form-control"
-          name="kockaInput"
+          name="kocka"
+        />
+      </div>
+      <div class="form-group">
+        <label for="url">Url</label>
+        <input
+          formControlName="url"
+          type="text"
+          id="url"
+          class="form-control"
+          name="url"
         />
       </div>
     </div>
     <div class="row">
-      <button class="btn btn-primary">Buttonek</button>
+      <div
+        class="tw-bg-black tw-font-bold tw-text-white tw-p-2 tw-rounded-xl hover:tw-bg-white hover:tw-text-black tw-border-2 hover:tw-border-solid hover:tw-border-black tw-my-6 tw-text-center"
+      >
+        HAOJ
+      </div>
+      <div class="form-group">
+        <button
+          type="submit"
+          name="danger"
+          class="btn btn-primary form-control"
+        >
+          POST
+        </button>
+      </div>
     </div>
   </form>
   <div class="row">
     <div class="form-group">
-      <label for="danger">Danger</label>
       <button
         (click)="onFajrung()"
         type="button"
         name="danger"
         class="btn btn-danger form-control"
       >
-        Fajrung
+        GET
       </button>
     </div>
   </div>

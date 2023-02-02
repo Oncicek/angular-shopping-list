@@ -2,6 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
+interface Product {
+  id: string;
+  kocka: string;
+  name: string;
+  url: string;
+}
+
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
@@ -9,10 +16,13 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class FormComponent implements OnInit, OnDestroy {
   formGroup: FormGroup | null = null;
-  nameInput: FormControl = new FormControl('Aladin');
-  kockaInput: FormControl = new FormControl('Červená');
-  urlInput: FormControl = new FormControl('https://picsum.photos/200');
-  // https://m.media-amazon.com/images/I/61m+AKsEPTL._AC_SL1500_.jpg
+  nameInput = new FormControl('Aladin');
+  kockaInput = new FormControl('Červená');
+  urlInput = new FormControl(
+    'https://m.media-amazon.com/images/I/61m+AKsEPTL._AC_SL1500_.jpg'
+  );
+  products: Product[] = [];
+  getDataVar = this.http.get<Product[]>('http://localhost:3000/shop/products');
 
   constructor(private http: HttpClient) {}
 
@@ -24,6 +34,12 @@ export class FormComponent implements OnInit, OnDestroy {
     });
   }
 
+  finalizeFetch() {
+    this.getDataVar.subscribe((data) => {
+      this.products = data;
+    });
+  }
+
   postData() {
     this.http
       .post('http://localhost:3000/admin/add-product', this.formGroup?.value, {
@@ -32,13 +48,17 @@ export class FormComponent implements OnInit, OnDestroy {
           'Access-Control-Allow-Origin': '*',
         },
       })
-      .subscribe((data) => console.log(data.body));
+      .subscribe({
+        next: () => this.finalizeFetch(),
+        error: () => this.finalizeFetch(),
+      });
   }
 
   getData() {
-    this.http
-      .get('http://localhost:3000/shop')
-      .subscribe((data) => console.log(data));
+    this.getDataVar.subscribe((data) => {
+      this.products = data;
+      console.log(this.products);
+    });
   }
 
   ngOnDestroy(): void {}
